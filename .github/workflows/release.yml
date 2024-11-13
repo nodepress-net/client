@@ -1,0 +1,70 @@
+name: CI/CD Release
+
+on:
+    push:
+        branches:
+            - main # Dispara el flujo al hacer push en main
+            - 'feature/*' # Opcional: Agrega ramas de características si quieres que también corran los tests en ellas
+
+jobs:
+    test_and_publish:
+        runs-on: ubuntu-latest
+
+        permissions:
+            contents: write        # Permiso para crear y actualizar contenidos (tags, releases)
+            pull-requests: write   # Permiso para crear y actualizar PRs
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "20"
+                  cache: "npm"
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Run tests
+              run: npm test
+
+            # Configuración de release-please para generar changelog y realizar el release
+            - name: Release Please
+              id: release
+              uses: google-github-actions/release-please-action@v3
+              with:
+                  release-type: "node"
+                  package-name: "@nodepress-net/client"  # Reemplaza "tu-paquete" con el nombre de tu paquete en package.json
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+            # Obtiene la versión desde package.json para usarla en el nombre del release
+            - name: Get version from package.json
+              id: get_version
+              run: |
+                  VERSION=$(node -p "require('./package.json').version")
+                  echo "version=$VERSION" >> $GITHUB_ENV
+
+            - name: Create GitHub Release
+              if: success()
+              uses: actions/create-release@v1
+              with:
+                  tag_name: "v${{ env.version }}"
+                  release_name: Release v${{ env.version }}
+                  body: |
+                      See the [CHANGELOG](./CHANGELOG.md) for details.
+                  draft: false
+                  prerelease: false
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            # Despliegue continuo a npm si es una release en main
+            #- name: Publish to npm
+              #if: github.ref == 'refs/heads/main' && success()
+              #run: npm publish
+              #env:
+                  #NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+env:
+    ACTIONS_STEP_DEBUG: true  # Habilita el modo debug para obtener detalles adicionales en el log

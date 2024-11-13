@@ -1,0 +1,16 @@
+# node_modules no debe estar en git
+node_modules/
+
+# El directorio de salida (dist) es generado por TypeScript, no es necesario en git
+dist/
+
+# Excluir cache de Turbo
+turbo/
+
+# Archivos de entorno
+.env
+
+# Archivos de logs y lockfiles
+npm-debug.log
+/.turbo
+/packages/cli/.turbo

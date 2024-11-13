@@ -1,0 +1,31 @@
+{
+	"name": "@nodepress-net/client",
+	"version": "0.0.0",
+	"main": "apps/cli/dist/index.js",
+	"bin": {
+		"nodepress": "./apps/cli/dist/index.js"
+	},
+	"scripts": {
+		"dev": "turbo run dev",
+		"build": "turbo run build",
+		"start": "node apps/backend/dist/main",
+		"prepublishOnly": "npm run build",
+		"release": "standard-version",
+		"test": "echo \"Succcess: no test specified\"",
+		"prepare": "husky"
+	},
+	"keywords": [],
+	"author": "Sergio González <sgonzalez@jscode.es> (JSCODE)",
+	"license": "MIT",
+	"description": "",
+	"workspaces": [
+		"packages/*"
+	],
+	"devDependencies": {
+		"@commitlint/cli": "^19.5.0",
+		"@commitlint/config-conventional": "^19.5.0",
+		"husky": "^9.1.6",
+		"standard-version": "9.5.0",
+		"turbo": "2.2.3"
+	}
+}

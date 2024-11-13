@@ -1,0 +1,21 @@
+# Excluir tests
+tests/
+*.test.ts
+
+# Excluir TypeScript source files
+apps/
+
+# Excluir archivos de configuración innecesarios en el paquete npm
+tsconfig.json
+.eslintrc.js
+.gitignore
+
+# No incluir node_modules
+node_modules/
+
+# turbo.json es un archivo de configuración de Turbo
+turbo.json
+
+.turbo/
+.editorconfig
+.gitattributes
