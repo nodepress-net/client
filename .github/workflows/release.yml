@@ -30,6 +30,12 @@ jobs:
             - name: Run tests
               run: npm test
 
+            - name: Push updated changelog and tags
+              run: |
+                  git config --global user.name "sgonzalez"
+                  git config --global user.email "sgonzalez@jscode.es"
+                  git push origin main --follow-tags
+
             # Configuración de release-please para generar changelog y realizar el release
             - name: Release Please
               id: release
