@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/nodepress-net/client/compare/v1.0.1...v1.1.0) (2024-11-13)
+
+
+### Features
+
+* permitir la publicación ([7a4a81a](https://github.com/nodepress-net/client/commit/7a4a81a38cd95b689b1ded461901248774be4d15))
+
 ## [1.0.1](https://github.com/nodepress-net/client/compare/v1.0.0...v1.0.1) (2024-11-13)
 
 
