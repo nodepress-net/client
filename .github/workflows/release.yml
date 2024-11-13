@@ -13,10 +13,17 @@ jobs:
         permissions:
             contents: write # Permiso para crear y actualizar contenidos (tags, releases)
             pull-requests: write # Permiso para crear y actualizar PRs
+            issues: write
 
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
+
+            - name: Push updated changelog and tags
+              run: |
+                  git config --global user.name "sgonzalez"
+                  git config --global user.email "sgonzalez@jscode.es"
+                  git push origin main --follow-tags
 
             - name: Setup Node.js
               uses: actions/setup-node@v3
@@ -30,19 +37,12 @@ jobs:
             - name: Run tests
               run: npm test
 
-            - name: Push updated changelog and tags
-              run: |
-                  git config --global user.name "sgonzalez"
-                  git config --global user.email "sgonzalez@jscode.es"
-                  git push origin main --follow-tags
-
             # Configuración de release-please para generar changelog y realizar el release
             - name: Release Please
               id: release
-              uses: google-github-actions/release-please-action@v3
+              uses: googleapis/release-please-action@v4
               with:
-                  release-type: "node"
-                  package-name: "@nodepress-net/client" # Reemplaza "tu-paquete" con el nombre de tu paquete en package.json
+                  release-type: node
                   token: ${{ secrets.GITHUB_TOKEN }}
 
             # Obtiene la versión desde package.json para usarla en el nombre del release
