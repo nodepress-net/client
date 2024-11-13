@@ -43,7 +43,7 @@ jobs:
               uses: googleapis/release-please-action@v4
               with:
                   release-type: node
-                  token: ${{ secrets.GITHUB_TOKEN }}
+                  token: ${{ secrets.RELEASE_TOKEN }}
 
             # Obtiene la versión desde package.json para usarla en el nombre del release
             - name: Get version from package.json
@@ -63,7 +63,7 @@ jobs:
                   draft: false
                   prerelease: false
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
 
             # Despliegue continuo a npm si es una release en main
             #- name: Publish to npm
