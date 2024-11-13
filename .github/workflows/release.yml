@@ -66,11 +66,11 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
 
             # Despliegue continuo a npm si es una release en main
-            - name: Publish to npm
-              if: github.ref == 'refs/heads/main' && success()
-              run: npm publish
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+            #- name: Publish to npm
+            #if: success()
+            #run: npm publish
+            #env:
+            #NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 env:
     ACTIONS_STEP_DEBUG: true # Habilita el modo debug para obtener detalles adicionales en el log
