@@ -1,6 +1,6 @@
 {
 	"name": "@nodepress-net/client",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"main": "apps/cli/dist/index.js",
 	"bin": {
 		"nodepress": "./apps/cli/dist/index.js"
