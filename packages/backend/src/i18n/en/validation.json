@@ -1,0 +1,6 @@
+{
+	"NAME_INVALID": "Nombre no válido o minimo {min} caracteres",
+	"LASTNAME_INVALID": "Apellido no válido o minimo {min} caracteres",
+	"EMAIL_INVALID": "Correo electrónico no válido",
+	"PASSWORD_INVALID": "Contraseña no válida"
+}
