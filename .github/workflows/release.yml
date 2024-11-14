@@ -16,6 +16,14 @@ jobs:
             issues: write
 
         steps:
+            # Configuración de release-please para generar changelog y realizar el release
+            - name: Release Please
+              id: release
+              uses: googleapis/release-please-action@v4
+              with:
+                  release-type: node
+                  token: ${{ secrets.RELEASE_TOKEN }}
+
             - name: Checkout code
               uses: actions/checkout@v2
 
@@ -36,14 +44,6 @@ jobs:
 
             - name: Run tests
               run: npm test
-
-            # Configuración de release-please para generar changelog y realizar el release
-            - name: Release Please
-              id: release
-              uses: googleapis/release-please-action@v4
-              with:
-                  release-type: node
-                  token: ${{ secrets.RELEASE_TOKEN }}
 
             # Obtiene la versión desde package.json para usarla en el nombre del release
             - name: Get version from package.json
