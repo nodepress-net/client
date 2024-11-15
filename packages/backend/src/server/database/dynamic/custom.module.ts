@@ -17,7 +17,7 @@ import { InjectRepository, TypeOrmModule } from '@nestjs/typeorm';
 import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type';
 import { Api } from '@server/pipe/api.version.pipe';
 import qs from 'qs';
-import { EntitySchema, Like } from 'typeorm';
+import { ColumnType, EntitySchema, Like } from 'typeorm';
 import { entities } from './entities';
 import { handleDatabaseError } from './error.handler';
 
@@ -54,7 +54,7 @@ function validateEntityName(entityName: string): boolean {
 
 function validateColumnConfig(columnConfig: any, columnName: string): boolean {
 	// Tipos válidos compatibles con SQLite, MySQL y PostgreSQL
-	const validTypes = [
+	const validTypes: ColumnType[] = [
 		'int', // Para enteros
 		'integer', // Alias de 'int', compatible con SQLite
 		'bigint', // Para enteros grandes
@@ -137,6 +137,10 @@ export function generateEntities(): EntityClassOrSchema[] {
 				type: 'datetime',
 				updateDate: true, // Usará el decorador UpdateDateColumn
 			},
+			published: {
+				type: 'boolean',
+				default: true,
+			},
 		};
 
 		if (options?.draftAndPublish) {
@@ -156,7 +160,7 @@ export function generateEntities(): EntityClassOrSchema[] {
 			name,
 			columns: finalColumns,
 			options: {},
-		});
+		} as any);
 
 		return entity;
 	});
@@ -183,6 +187,7 @@ function generateCrudControllers(entities: any[]) {
 				const params = {
 					skip: (page - 1) * limit,
 					take: limit,
+					order: {},
 					where: {}, // Inicializamos la propiedad 'where' para filtros
 				};
 
